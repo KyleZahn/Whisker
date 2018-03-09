@@ -29,7 +29,9 @@ export default class Card extends Component {
       <View style={{ flex: 10 }}>
         <View style={[styles.card]}>
           {this.renderImage(this.props)}
-          <Text style={styles.cardName}>{this.props.name.$t}</Text>
+          <Text style={styles.cardName}>
+            {this.props.name.$t}
+          </Text>
           <Text style={styles.cardText}>
             {this.props.breeds.breed.$t}
           </Text>

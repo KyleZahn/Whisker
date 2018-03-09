@@ -2,9 +2,12 @@ import React, { Component } from 'react';
 import ImageSlider from 'react-native-image-slider';
 import Communications from 'react-native-communications';
 import { Linking, ScrollView, Text, TouchableOpacity, View, Image } from 'react-native';
+
 import FavoriteHeader from '../../../assets/favorites.png';
 import BackArrow from '../../../assets/backArrow.png';
 import HeaderSmall from '../../../assets/headerSmall.png';
+import noPhotos from '../../../assets/noPhotos.png';
+
 
 import styles from '../../styles/stylesheet';
 
@@ -51,24 +54,26 @@ export default class Home extends Component {
             zIndex: 1,
             height: 55,
             width: 225,
-            left: '90%',
-            bottom: 73,
+            left: '88%',
+            bottom: 73.8,
           }}
         >
           <Image
             source={FavoriteHeader}
             style={{
               zIndex: 1,
-              height: '70%',
-              width: '15%',
-              }}
+              height: '72%',
+              width: '20%',
+            }}
           />
         </TouchableOpacity>
       </View>
     ),
   })
 
-  // Opens the pet's address from the Petfinder response in Google Maps, in a browser.
+  /*
+  Opens the pet's address from the Petfinder response in Google Maps, in a browser.
+*/
   openMaps = () => {
     const address = this.props.navigation.state.params.item.contact.address1.$t;
     const city = this.props.navigation.state.params.item.contact.city.$t;
@@ -78,36 +83,53 @@ export default class Home extends Component {
     Linking.openURL(`${maps} ${address} ${city} ${state} ${zip}`);
   }
 
-  // Pushes all available pet photos to the array, images, which is displayed in a slideshow format.
-  render() {
+  /*
+  Pushes all available pet photos to the array, images, which is displayed in a slideshow format.
+*/
+  renderImage = (props) => {
+    const hasPhotos = props.navigation.state.params.item.media.hasOwnProperty('photos');
     const images = [];
-    const { photo } = this.props.navigation.state.params.item.media.photos;
-    if (photo[2]) {
-      images.push(photo[2].$t);
-    }
-    if (photo[7]) {
-      images.push(photo[7].$t);
-    }
-    if (photo[12]) {
-      images.push(photo[12].$t);
-    }
-    if (photo[17]) {
-      images.push(photo[17].$t);
-    }
-    if (photo[22]) {
-      images.push(photo[22].$t);
-    }
-    if (photo[27]) {
-      images.push(photo[27].$t);
-    }
-    if (photo[32]) {
-      images.push(photo[32].$t);
-    }
-    return (
-      <ScrollView>
+    if (hasPhotos) {
+      const { photo } = props.navigation.state.params.item.media.photos;
+      if (photo[2]) {
+        images.push(photo[2].$t);
+      }
+      if (photo[7]) {
+        images.push(photo[7].$t);
+      }
+      if (photo[12]) {
+        images.push(photo[12].$t);
+      }
+      if (photo[17]) {
+        images.push(photo[17].$t);
+      }
+      if (photo[22]) {
+        images.push(photo[22].$t);
+      }
+      if (photo[27]) {
+        images.push(photo[27].$t);
+      }
+      if (photo[32]) {
+        images.push(photo[32].$t);
+      }
+      return (
         <ImageSlider
           images={images}
         />
+      );
+    } images.push(noPhotos);
+    return (
+      <ImageSlider
+        images={images}
+      />
+    );
+  }
+
+
+  render() {
+    return (
+      <ScrollView>
+        {this.renderImage(this.props)}
         <Text style={styles.descName}>
           {this.props.navigation.state.params.item.name.$t}
         </Text>

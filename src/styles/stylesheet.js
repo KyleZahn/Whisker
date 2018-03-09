@@ -41,7 +41,7 @@ export default StyleSheet.create({
   },
   logo: {
     alignSelf: 'center',
-    width: 260,
+    width: 272,
     height: 70,
   },
   welcome: {

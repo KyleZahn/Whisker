@@ -49,17 +49,17 @@ export default class Animals extends Component {
             zIndex: 1,
             height: 55,
             width: 225,
-            left: '90%',
-            bottom: 73,
+            left: '88%',
+            bottom: 73.8,
           }}
         >
           <Image
             source={FavoriteHeader}
             style={{
               zIndex: 1,
-              height: '70%',
-              width: '15%',
-              }}
+              height: '72%',
+              width: '20%',
+            }}
           />
         </TouchableOpacity>
       </View>

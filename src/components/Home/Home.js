@@ -99,7 +99,7 @@ export default class Home extends Component {
             height: 55,
             width: 225,
             top: '2%',
-            left: '90%',
+            left: '88%',
           }}
             hitSlop={{
             bottom: -20,
@@ -109,8 +109,8 @@ export default class Home extends Component {
               source={FavoriteHeader}
               style={{
               zIndex: 1,
-              height: '70%',
-              width: '15%',
+              height: '72%',
+              width: '20%',
               }}
             />
           </TouchableOpacity>

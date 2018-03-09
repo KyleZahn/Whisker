@@ -4,6 +4,7 @@ import { Alert, TouchableWithoutFeedback, TouchableOpacity, View, Text, Image, A
 import FavoriteHeader from '../../../assets/favorites.png';
 import RemoveFavorite from '../../../assets/removeFavorite.png';
 import BackArrow from '../../../assets/backArrow.png';
+import noPhotos from '../../../assets/noPhotos.png';
 
 import styles from '../../styles/stylesheet';
 
@@ -43,7 +44,7 @@ export default class Favorites extends Component {
             zIndex: 1,
             height: 55,
             width: 225,
-            left: '90%',
+            left: '88%',
             bottom: 49,
           }}
         >
@@ -51,8 +52,8 @@ export default class Favorites extends Component {
             source={FavoriteHeader}
             style={{
               zIndex: 1,
-              height: '70%',
-              width: '15%',
+              height: '72%',
+              width: '20%',
             }}
           />
         </TouchableOpacity>
@@ -129,13 +130,29 @@ export default class Favorites extends Component {
     );
   }
 
-  renderItem = ({ item }) => (
-    <TouchableOpacity onPress={() => this.viewDesc(item)} style={{ height: 150, backgroundColor: 'white', margin: 5 }} activeOpacity={0.7}>
+  renderImage = ({ item }) => {
+    const hasPhotos = item.media.hasOwnProperty('photos');
+    if (hasPhotos) {
+      return (
+        <Image
+          style={[styles.favoriteImage]}
+          resizeMode="stretch"
+          source={{ uri: item.media.photos.photo[2].$t }}
+        />
+      );
+    }
+    return (
       <Image
         style={[styles.favoriteImage]}
-        resizeMode="stretch" // contain
-        source={{ uri: item.media.photos.photo[2].$t }}
+        resizeMode="stretch"
+        source={noPhotos}
       />
+    );
+  }
+
+  renderItem = ({ item }) => (
+    <TouchableOpacity onPress={() => this.viewDesc(item)} style={{ height: 150, backgroundColor: 'white', margin: 5 }} activeOpacity={0.7}>
+      {this.renderImage({ item })}
       <Text style={[styles.favoriteName]}>
         {item.name.$t}
       </Text>
@@ -161,17 +178,19 @@ export default class Favorites extends Component {
     <View style={styles.divider} />
   )
 
-  // If the user has no pets in their favorites, display message below.
+  /*
+  If the user has no pets in their favorites, display message below.
+*/
   render() {
     if (this.state.favorites.length === 0) {
       return (
         <View>
           <Text style={styles.noAnimalsTitle}>
             :(
-            </Text>
+          </Text>
           <Text style={styles.noAnimals}>
             Uh oh! You have not added any animals to your favorites!
-            </Text>
+          </Text>
         </View>
       );
     }
